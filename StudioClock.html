@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>StudioClock</title>
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="stylesheet" type="text/css" href="StudioClock.css">
+		<script language="JavaScript" type="text/javascript" src="JS_functions/display_a_clock.js"></script>
+		<script language="JavaScript" type="text/javascript" src="JS_functions/trigger_every_second.js"></script>
+		<script language="JavaScript" type="text/javascript" src="JS_functions/peak_meter.js"></script>
+		<script language="JavaScript" type="text/javascript" src="JS_functions/display_a_vu_meter.js"></script>
+		<script language="JavaScript" type="text/javascript" src="JS_functions/load_an_audio_stream_hidden_player.js"></script>
+		<script language="JavaScript" type="text/javascript" src="JS_functions/update_supervision_info_about_an_azuracast_radio.js"></script>
+		<script language="JavaScript" type="text/javascript" src="JS_objects/Trigger.class.js"></script>
+		<script language="JavaScript" type="text/javascript" src="StudioClock.js"></script>
+	</head>
+  <body>
+		<json id="parameters">
+			{
+				"activate_supervision_tools": false,
+				"name":                       "Replace_this_by_your_webradios_name",
+				"stream_URL":                 "Replace_this_by_your_Azuracast_radio_mp3_stream_URL",
+				"live_API_URL":               "Replace_this_by_your_Azuracast_radio_live_API_URL"
+			}
+		</json>
+		<div id="clock">
+    	<canvas id="clock_canvas">
+    	</canvas>
+		</div>
+		<div id="suppervision_tools">
+			<div id="audio_player_container">
+			</div>
+			<div id="peak-meter-container">
+				<div id="peak-meter">
+				</div>
+				<p id="peak-meter-legend">
+				Press any key<br/>
+				to activate.
+				</p>
+			</div>
+			<div class="light_off light" id="on_air_light">
+				ONLINE
+			</div>
+			<div class="light_off light" id="live_light">
+				LIVE
+			</div>
+			<div id="listener_counter_container">
+				<span>Listeners : </span> <span id="listener_counter"></span>
+			</div>
+		</div>
+  </body>
+</html>
