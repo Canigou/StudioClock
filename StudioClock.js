@@ -5,13 +5,31 @@ window.onload = function() {
   var date = new Date (Date.now());
   var canvas = document.getElementById('clock_canvas')
   var first_call = true;
-  if (window.innerHeight >= window.innerWidth) {
-    canvas.height = window.innerWidth;
-    canvas.width = window.innerWidth;
+  var window_ratio = window.innerWidth / window.innerHeight
+
+  if (parameters.activate_supervision_tools == true) {
+    if (window_ratio <= 4/3) {
+      if (window.innerHeight >= window.innerWidth) {
+        canvas.height = window.innerWidth * 0.8;
+        canvas.width = window.innerWidth * 0.8;
+      } else {
+        canvas.height = window.innerHeight * 0.8;
+        canvas.width = window.innerHeight * 0.8;
+      }
+    } else {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerHeight;
+    }
   } else {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerHeight;
+    if (window.innerHeight >= window.innerWidth) {
+      canvas.height = window.innerWidth;
+      canvas.width = window.innerWidth;
+    } else {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerHeight;
+    }
   }
+
   var second_trigger = new Trigger (
     true,
     function(){
@@ -35,6 +53,8 @@ window.onload = function() {
     on_air_light_HTML_element = document.getElementById('on_air_light');
     live_light_HTML_element = document.getElementById('live_light');
     listener_counter_element = document.getElementById('listener_counter');
+    error_container_element = document.getElementById('error_container');
+    radio_live_API_event_source.onerror = function (error) {display_error (error, error_container_element)};
     radio_live_API_event_source.onmessage = function (radio_live_infos) {update_supervision_info_about_an_azuracast_radio (radio_live_infos,on_air_light_HTML_element,live_light_HTML_element,listener_counter_element)};
 
   }

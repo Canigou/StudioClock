@@ -4,6 +4,7 @@ body {
   flex-wrap: wrap;
   font-family: "DejaVu Sans";
   margin: 0;
+  color: red;
 }
 
 #clock {
@@ -17,6 +18,10 @@ json {
 #suppervision_tools {
   display: none;
   margin: 2rem;
+}
+
+#error_container {
+  font-size: 3rem;
 }
 
 #peak-meter {
@@ -37,7 +42,7 @@ json {
   margin: 1rem;
   margin-left: auto;
   margin-right: auto;
-  width: 20rem;
+  font-size: 4rem;
 }
 
 #on_air_light {
@@ -49,13 +54,11 @@ json {
 #on_air_light.light_on {
   color: #570000;
   background-color: red;
-  font-size: 5rem;
 }
 
 #on_air_light.light_off {
   color: #260000;
   background-color: #480000;
-  font-size: 5rem;
 }
 
 #live_light {
@@ -67,19 +70,25 @@ json {
 #live_light.light_on {
   color: #570000;
   background-color: red;
-  font-size: 5rem;
 }
 
 #live_light.light_off {
   color: #260000;
   background-color: #480000;
-  font-size: 5rem;
 }
 
 #listener_counter_container {
-  font-size: 4rem;
-  color: red;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  font-size: 4rem;
+}
+
+@media (max-aspect-ratio: 4/3) {
+  .light {
+    font-size: 2rem;
+  }
+  #listener_counter_container {
+    font-size: 2rem;
+  }
 }
