@@ -1,4 +1,5 @@
 var interrupt_second_trigger = false;
+var api_connexion_error = false;
 
 window.onload = function() {
   var parameters = JSON.parse(document.getElementById('parameters').innerHTML);
@@ -37,7 +38,27 @@ window.onload = function() {
       first_call = display_a_clock(canvas,date,first_call);
     }
   )
-  var trigger_objects = [second_trigger];
+  var reconnect_api_if_error = new Trigger (
+    true,
+    function(){
+      if (api_connexion_error == true)
+        window.radio_live_API_event_source = new EventSource(parameters.live_API_URL);
+        window.radio_live_API_event_source.onopen = function (radio_live_infos) {
+          api_connexion_error = false;
+          remove_displayed_error (error_container_element);
+          load_an_audio_stream_hidden_player (audio_player_container_element,parameters.stream_URL);
+        };
+        window.radio_live_API_event_source.onerror = function (error) {
+          display_error (error_container_element);
+          api_connexion_error = true;
+          ;
+        };
+        window.radio_live_API_event_source.onmessage = function (radio_live_infos) {
+          update_supervision_info_about_an_azuracast_radio (radio_live_infos,on_air_light_HTML_element,live_light_HTML_element,listener_counter_element);
+        };
+    }
+  )
+  var trigger_objects = [second_trigger,reconnect_api_if_error];
   trigger_every_second (trigger_objects);
 
   if (parameters.activate_supervision_tools == true) {
@@ -49,13 +70,21 @@ window.onload = function() {
     var audio_player_element = document.getElementById('audio_player');
     var peak_meter_element = document.getElementById('peak-meter');
     display_a_vu_meter (audio_player_element,peak_meter_element)
-    var radio_live_API_event_source = new EventSource(parameters.live_API_URL);
+    window.radio_live_API_event_source = new EventSource(parameters.live_API_URL);
     on_air_light_HTML_element = document.getElementById('on_air_light');
     live_light_HTML_element = document.getElementById('live_light');
     listener_counter_element = document.getElementById('listener_counter');
     error_container_element = document.getElementById('error_container');
-    radio_live_API_event_source.onerror = function (error) {display_error (error, error_container_element)};
-    radio_live_API_event_source.onmessage = function (radio_live_infos) {update_supervision_info_about_an_azuracast_radio (radio_live_infos,on_air_light_HTML_element,live_light_HTML_element,listener_counter_element)};
+
+    window.radio_live_API_event_source.onerror = function (error) {
+      display_error (error_container_element);
+      api_connexion_error = true;
+      ;
+    };
+
+    window.radio_live_API_event_source.onmessage = function (radio_live_infos) {
+      update_supervision_info_about_an_azuracast_radio (radio_live_infos,on_air_light_HTML_element,live_light_HTML_element,listener_counter_element);
+    };
 
   }
 

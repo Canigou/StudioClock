@@ -18,10 +18,19 @@ json {
 #suppervision_tools {
   display: none;
   margin: 2rem;
+  min-width: 15rem;
 }
 
 #error_container {
+  display: none;
   font-size: 3rem;
+  position: fixed;
+  top: 0;
+  background: black;
+  border-color: red;
+  border-width: 3px;
+  border-style: solid;
+  z-index: 1;
 }
 
 #peak-meter {
